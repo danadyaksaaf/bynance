@@ -1,0 +1,653 @@
+/* --- Variables and Global Styles --- */
+:root {
+    /* Base Colors (The light theme) */
+    --primary-green: #38a169;
+    --light-green: #68d391;
+    --white: #ffffff;
+    --off-white: #f7f9fc;
+    --text-dark: #2d3748;
+    --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* Dynamic Theme Variables */
+    --background: var(--off-white);
+    --text-color: var(--text-dark);
+    --card-bg: var(--white);
+    --shadow: var(--box-shadow-light);
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --hero-image-border: var(--primary-green);
+    /* Embed glow colors (used for ambient light behind video embeds) */
+    --embed-glow: rgba(56, 161, 105, 0.14);
+    --embed-glow-strong: rgba(56, 161, 105, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    /* The core gradient background */
+    background: linear-gradient(135deg, var(--white) 0%, var(--off-white) 40%, var(--light-green) 100%);
+    min-height: 100vh;
+}
+
+/* --- Dark Mode Overrides --- */
+body.dark-mode {
+    /* 1. Base Colors */
+    --primary-green: #48bb78; /* Slightly brighter green for dark contrast */
+    --text-dark: #e2e8f0;
+    --off-white: #1a202c; /* Dark background */
+    --white: #2d3748;     /* Dark card/element background */
+
+    /* 2. Dynamic Theme Variables Redefinition */
+    --background: var(--off-white);
+    --text-color: var(--text-dark);
+    --card-bg: var(--white);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Stronger shadow in dark mode */
+    --navbar-bg: rgba(26, 32, 44, 0.95);
+    --hero-image-border: var(--primary-green);
+
+    /* Dark-mode overrides for embed glow */
+    --embed-glow: rgba(72, 187, 120, 0.16);
+    --embed-glow-strong: rgba(72, 187, 120, 0.26);
+
+    /* Apply the dark background gradient */
+    background: linear-gradient(135deg, var(--off-white) 0%, #2c3e50 40%, #1a202c 100%);
+    color: var(--text-color);
+}
+
+/* --- Navigation Bar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--navbar-bg); /* Slightly transparent white for a modern feel */
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Style for the Dark Mode Toggle Button */
+.mode-toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 15px;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.mode-toggle-button:hover {
+    color: var(--primary-green);
+}
+
+/* Update the icon color in dark mode */
+body.dark-mode .mode-toggle-button {
+    color: #ffd700; /* A gold/yellow sun icon */
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-green);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 20px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-green);
+}
+
+.cta-button {
+    background-color: var(--primary-green) !important;
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #2c774b !important; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6rem 5% 4rem;
+    max-width: 1200px;
+    margin: auto;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.hero-section .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.key-features {
+    list-style: none;
+    margin-bottom: 2.5rem;
+}
+
+.key-features li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.main-cta {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(56, 161, 105, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.main-cta:hover {
+    background-color: #2c774b;
+    transform: translateY(-3px);
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 500px;
+    height: 350px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: var(--primary-green);
+    border: 2px solid var(--primary-green);
+}
+
+/* --- Features Section --- */
+.features-section {
+    padding: 4rem 5%;
+    text-align: center;
+    background-color: var(--card-bg); /* White background for contrast */
+    box-shadow: inset 0 8px 10px -10px rgba(0, 0, 0, 0.1);
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    color: var(--primary-green);
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background-color: var(--background);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    max-width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid var(--primary-green);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card h3 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.feature-card p {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* --- Pricing Section Styles (NEW) --- */
+.pricing-section {
+    padding: 6rem 5%;
+    text-align: center;
+    background-color: var(--card-bg); /* Use card background for section */
+    box-shadow: inset 0 8px 10px -10px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.pricing-section h2 {
+    font-size: 2.5rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.pricing-section .subtitle {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Pricing Table Container */
+.pricing-table-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.pricing-card {
+    background-color: var(--background); /* Use background variable for card to distinguish from section */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    flex-basis: 300px; 
+    max-width: 350px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid transparent;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.plan-title {
+    font-size: 1.8rem;
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+}
+
+.plan-slogan {
+    font-style: italic;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+}
+
+.price {
+    margin: 2rem 0;
+}
+
+.currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    vertical-align: top;
+    color: var(--primary-green);
+}
+
+.amount {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.period {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/* Features List */
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.features-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+body.dark-mode .features-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.features-list .disabled {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+/* --- Extended Feature Grid --- */
+.feature-grid-extended {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.feature-card-extended {
+    background-color: var(--card-bg); /* Use card background for contrast */
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid var(--primary-green);
+    height: 100%; /* Ensures all cards in the grid are the same height */
+}
+
+.feature-card-extended:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.feature-card-extended .icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.feature-card-extended h3 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.feature-card-extended p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.feature-card-extended ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.95rem;
+}
+
+.feature-card-extended li {
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.feature-card-extended li::before {
+    content: "✔️"; /* Checkmark for key benefits */
+    margin-right: 0.5em;
+    font-size: 0.8em;
+}
+
+/* Final CTA Block */
+.final-cta-block {
+    margin-top: 5rem;
+    padding: 2rem;
+    background-color: var(--background);
+    border-radius: 10px;
+}
+
+.final-cta-block p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+/* CTA Button */
+.plan-cta {
+    display: block;
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+    background-color: var(--primary-green);
+    color: var(--white);
+}
+
+.plan-cta:hover {
+    background-color: var(--cta-hover-bg);
+}
+
+/* Professional Card (Highlight) */
+.professional-card {
+    border: 3px solid var(--primary-green);
+    position: relative;
+    transform: scale(1.05); 
+}
+
+.professional-card:hover {
+    transform: scale(1.05) translateY(-10px);
+}
+
+.professional-cta {
+    /* Use a darker green for primary emphasis */
+    background-color: #2c774b !important; 
+    box-shadow: 0 5px 15px rgba(56, 161, 105, 0.4);
+}
+
+.professional-cta:hover {
+    background-color: var(--primary-green) !important;
+}
+
+.badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ambient glow for video embeds */
+.video-wrapper {
+    position: relative;
+    z-index: 0;
+    /* keep existing visual border/shadow but allow glow behind */
+}
+
+.video-wrapper::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 70%;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 40%, var(--embed-glow-strong) 0%, var(--embed-glow) 30%, transparent 60%);
+    filter: blur(30px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* --- Demo Section --- */
+.demo-section {
+    padding: 4rem 5%;
+    text-align: center;
+    background-color: var(--card-bg);
+}
+
+.video-wrapper {
+    max-width: 1000px;
+    margin: 1.5rem auto;
+    border-radius: 14px;
+    overflow: hidden; /* ensures rounded corners on iframe */
+    box-shadow: 0 20px 40px rgba(2,6,23,0.18), 0 0 0 6px rgba(0,0,0,0.03) inset; /* soft shadow + subtle inner border */
+    border: 6px solid rgba(255,255,255,0.03);
+}
+
+.video-embed iframe {
+    width: 100%;
+    height: 520px;
+    display: block;
+    border: 0;
+}
+
+.demo-description {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    color: var(--text-color);
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .video-embed iframe {
+        height: 320px;
+    }
+}
+
+@media (max-width: 600px) {
+    .video-embed iframe {
+        height: 220px;
+    }
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 1.5rem 5%;
+    background-color: var(--background);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* --- Animation Classes (Initial State - Hidden/Off-Screen) --- */
+.animate-on-load,
+.animate-feature {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Smooth transition for all animated elements */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Adding staggered delays for a smoother effect */
+.hero-content h1 { transition-delay: 0.2s; }
+.hero-content .subtitle { transition-delay: 0.4s; }
+.hero-content .key-features { transition-delay: 0.6s; }
+.hero-content .main-cta { transition-delay: 0.8s; }
+.hero-image { transition-delay: 1s; }
+
+/* Feature animation stagger */
+.features-section h2 { transition-delay: 0s; }
+.feature-card:nth-child(1) { transition-delay: 0.3s; }
+.feature-card:nth-child(2) { transition-delay: 0.5s; }
+.feature-card:nth-child(3) { transition-delay: 0.7s; }
+
+/* --- Animation Classes (Final State - Visible/In Place) --- */
+.loaded .animate-on-load {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Features should be animated only when they are scrolled into view (handled by JS) */
+.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 900px) {
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 4rem;
+    }
+    .hero-image {
+        margin-top: 3rem;
+        width: 100%;
+        max-width: 100%;
+        height: 250px;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content .subtitle {
+        font-size: 1.1rem;
+    }
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .nav-links {
+        margin-top: 10px;
+    }
+
+    .pricing-table-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .pricing-card {
+        transform: none; 
+        max-width: 400px;
+        flex-basis: auto;
+        width: 100%;
+    }
+    .professional-card {
+        transform: none;
+    }
+    .pricing-card:hover {
+        transform: none;
+    }
+    .professional-card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-links a:not(.cta-button) {
+        display: none; /* Hide non-CTA links on very small screens for clean look */
+    }
+    .feature-card {
+        max-width: 90%;
+    }
+}
