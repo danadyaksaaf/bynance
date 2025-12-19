@@ -32,6 +32,12 @@ body {
     /* The core gradient background */
     background: linear-gradient(135deg, var(--white) 0%, var(--off-white) 40%, var(--light-green) 100%);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto; /* allow main content to grow and push footer down */
 }
 
 /* --- Dark Mode Overrides --- */
@@ -104,6 +110,16 @@ body.dark-mode .mode-toggle-button {
     margin-left: 20px;
     font-weight: 600;
     transition: color 0.3s ease;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text-color);
+    margin-left: 8px;
 }
 
 .nav-links a:hover {
@@ -643,11 +659,237 @@ footer {
     }
 }
 
+/* Responsiveness */
 @media (max-width: 600px) {
-    .nav-links a:not(.cta-button) {
-        display: none; /* Hide non-CTA links on very small screens for clean look */
+    /* Mobile navigation: hide inline links and show toggle.
+       Clicking the toggle will add `.open` to `.nav-links` to reveal the menu. */
+    .nav-links a {
+        margin-left: 0;
+    }
+    .nav-toggle {
+        display: inline-block;
+        margin-right: 10px;
+        z-index: 1300;
+    }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 5%;
+        right: auto;
+        width: calc(100% - 10%);
+        background: var(--card-bg);
+        border-radius: 10px;
+        padding: 0.6rem 1rem;
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        gap: 8px;
+        z-index: 1200;
+        min-width: 160px;
+    }
+    .nav-links.open {
+        display: flex;
     }
     .feature-card {
         max-width: 90%;
     }
+}
+
+
+/* --- Checkout Page + Modal Styles --- */
+.checkout-container {
+    max-width: 1000px;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem 5%;
+}
+.checkout-summary {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    align-self: start;
+}
+.checkout-summary h2 { color: var(--primary-green); margin-bottom: 0.5rem; }
+.summary-sub { margin: 0.6rem 0; color: var(--text-color); }
+
+/* Date Picker Styles */
+.date-picker-wrapper {
+    margin: 1rem 0;
+}
+.date-picker-wrapper label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.date-picker-wrapper input[type="date"] {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: var(--background);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+.date-picker-wrapper input[type="date"]:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(56, 161, 105, 0.2);
+}
+
+.billing-form-wrapper { background: transparent; }
+.billing-form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.billing-form label { font-size: 0.9rem; color: var(--text-color); }
+.billing-form input { padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(0,0,0,0.08); }
+.billing-form .card-row { display: flex; gap: 1rem; }
+
+/* Responsive adjustments for checkout form */
+@media (max-width: 900px) {
+    .checkout-container {
+        grid-template-columns: 1fr; /* single column on smaller screens */
+        padding: 1rem 4%;
+        margin: 1.5rem auto;
+    }
+    .card-row {
+        flex-direction: column;
+    }
+    .billing-form {
+        padding: 1rem;
+    }
+    .date-picker-wrapper input[type="date"],
+    .billing-form input,
+    .billing-form select,
+    .address-controls input {
+        width: 100%;
+    }
+    .address-map { height: 160px; }
+}
+
+/* Summary Modal Styles */
+.modal-summary {
+    background: var(--card-bg);
+    padding: 2.2rem 2.6rem;
+    border-radius: 14px;
+    box-shadow: 0 20px 40px rgba(2,6,23,0.3);
+    transform: translateY(20px) scale(0.98);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(.2,.9,.3,1), opacity 0.45s ease;
+    max-width: 500px;
+    width: 90%;
+}
+.modal-overlay.show .modal-summary {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+.modal-summary h3 {
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.summary-details {
+    margin-bottom: 2rem;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.summary-row:last-child {
+    border-bottom: none;
+}
+.summary-row span:first-child {
+    font-weight: 500;
+    color: var(--text-color);
+}
+.summary-row span:last-child {
+    color: var(--text-color);
+    font-weight: 600;
+}
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+.cancel-button, .confirm-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+.cancel-button {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.cancel-button:hover {
+    background: rgba(0,0,0,0.05);
+}
+.confirm-button {
+    background: var(--primary-green);
+    color: var(--white);
+}
+.confirm-button:hover {
+    background: #2c774b;
+    transform: translateY(-1px);
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 10, 10, 0.45);
+    z-index: 2000;
+}
+.modal-overlay.show { display: flex; }
+
+.modal-success {
+    background: var(--card-bg);
+    padding: 2.2rem 2.6rem;
+    border-radius: 14px;
+    box-shadow: 0 20px 40px rgba(2,6,23,0.3);
+    text-align: center;
+    transform: translateY(20px) scale(0.98);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(.2,.9,.3,1), opacity 0.45s ease;
+}
+.modal-overlay.show .modal-success {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.success-svg { display: block; margin: 0 auto 0.6rem; }
+.success-circle { stroke-dasharray: 314; stroke-dashoffset: 314; animation: circle-draw 0.5s ease forwards; }
+.success-check { stroke-dasharray: 120; stroke-dashoffset: 120; animation: check-draw 0.6s 0.45s cubic-bezier(.2,.9,.3,1) forwards; }
+
+@keyframes circle-draw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes check-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 900px) {
+    .checkout-container { grid-template-columns: 1fr; padding: 1.5rem; }
 }
