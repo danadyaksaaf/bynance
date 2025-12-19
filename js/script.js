@@ -32,4 +32,28 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedElements.forEach(element => {
         observer.observe(element);
     });
+
+    // Mobile nav toggle: supports multiple pages/headers
+    const navToggles = document.querySelectorAll('#nav-toggle');
+    navToggles.forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            const nav = btn.closest('.navbar')?.querySelector('.nav-links');
+            if (!nav) return;
+            nav.classList.toggle('open');
+            const expanded = nav.classList.contains('open');
+            btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        });
+    });
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', (ev) => {
+        const openNavs = document.querySelectorAll('.nav-links.open');
+        openNavs.forEach(nav => {
+            if (!nav.contains(ev.target) && !nav.previousElementSibling?.contains(ev.target)) {
+                nav.classList.remove('open');
+            }
+        });
+    });
 });
+
+
