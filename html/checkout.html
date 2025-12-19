@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Bynance</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-text">⚡ Bynance</span>
+        </div>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="nav-links" id="nav-links">
+            <button id="dark-mode-toggle" class="mode-toggle-button">☀️</button>
+            <a href="../index.html">Home</a>
+            <a href="feature.html">Features</a>
+            <a href="pricing.html">Pricing</a>
+        </nav>
+    </header>
+
+    <main class="checkout-container">
+
+        <section class="checkout-summary">
+            <h2>You're checking out</h2>
+            <p class="summary-sub">Plan: <strong id="plan-name">—</strong></p>
+            <p class="summary-sub">Price: <strong id="plan-price">—</strong> <span id="plan-period"></span></p>
+            <div class="date-picker-wrapper">
+                <label for="next-payment-deadline">Next payment due:</label>
+                <input type="date" id="next-payment-deadline" name="nextPaymentDeadline" required>
+            </div>
+            <hr />
+        </section>
+
+        <section class="billing-form-wrapper">
+            <form id="checkout-form" class="billing-form">
+                <h3>Billing & Payment</h3>
+                <label for="full-name">Full Name</label>
+                <input id="full-name" name="fullName" type="text" required>
+
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required>
+
+                <label for="card-number">Card Number</label>
+                <input id="card-number" name="cardNumber" type="text" inputmode="numeric" pattern="[0-9 ]{12,19}" required placeholder="1234 5678 9012 3456">
+
+                <div class="card-row">
+                    <div>
+                        <label for="date">Date (MM/YYYY)</label>
+                        <input id="date" name="date" type="month" required>
+                    </div>
+                    <div>
+                        <label for="cvc">CVC</label>
+                        <input id="cvc" name="cvc" type="text" inputmode="numeric" pattern="[0-9]{3,4}" required placeholder="123">
+                    </div>
+                </div>
+
+                <label for="address">Billing Address</label>
+                <div class="address-autocomplete">
+                    <div class="address-controls" style="display:flex;gap:8px;align-items:center;">
+                        <input id="address" name="address" type="text" placeholder="Search for address or use my location" style="flex:1;">
+                        <button type="button" id="use-location" class="geo-button" title="Use my location">📍</button>
+                    </div>
+                    <ul id="address-suggestions" class="suggestions" role="listbox" aria-label="Address suggestions" style="list-style:none;padding:0;margin:6px 0;max-height:160px;overflow:auto;border-radius:6px;"></ul>
+                    <div id="map" class="address-map" style="height:200px;margin-top:8px;border-radius:6px;overflow:hidden;"></div>
+                    <input type="hidden" id="address-lat" name="addressLat">
+                    <input type="hidden" id="address-lon" name="addressLon">
+                </div>
+
+                <button type="submit" class="cta-button">Checkout</button>
+            </form>
+        </section>
+
+    </main>
+
+
+    <!-- Summary Confirmation Modal -->
+    <div id="summary-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-details">
+                <div class="summary-row">
+                    <span>Plan:</span>
+                    <span id="summary-plan">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Price:</span>
+                    <span id="summary-price">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Next Payment:</span>
+                    <span id="summary-date">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Name:</span>
+                    <span id="summary-name">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Email:</span>
+                    <span id="summary-email">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Address:</span>
+                    <span id="summary-address">—</span>
+                </div>
+                <div class="summary-row">
+                    <span>Card:</span>
+                    <span id="summary-card">—</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" id="cancel-summary" class="cancel-button">Cancel</button>
+                <button type="button" id="confirm-checkout" class="confirm-button">Confirm Purchase</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal / Success Overlay -->
+    <div id="success-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-success">
+            <svg class="success-svg" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+                <circle class="success-circle" cx="60" cy="60" r="50" fill="none" stroke="#e6f9ee" stroke-width="10"></circle>
+                <path class="success-check" d="M35 65 L52 82 L85 45" fill="none" stroke="#2ecc71" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>Checked out</h3>
+            <p>Thanks — your purchase is complete.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Bynance. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/darkmode.js"></script>
+    <script src="../js/checkout.js"></script>
+</body>
+
+</html>
